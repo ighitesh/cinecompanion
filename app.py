@@ -13,7 +13,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 # ########################################################################
-# The code for creating the web application
+# The libraries used for creating the web application
 from flask import Flask, render_template, request
 import json
 import requests
@@ -68,11 +68,11 @@ def home():
 
 @app.route("/recommend")
 def recommend():
-    movie = request.args.get('movie') # get movie name from the URL
+    # Getting the movie name from the search bar
+    movie = request.args.get('movie') 
     
-    # getting the movie name from the user
+    # Storing the movie name from the user
     movie_name = movie
-    # ########## input(' Enter movie name : ')
 
     # Creating a list with all the movie names given in the dataset
     list_of_all_titles = data_of_movies['title'].tolist()
@@ -93,7 +93,7 @@ def recommend():
         # sorting the movies based on their similarity score
         sorted_similar_movies = sorted(similarity_score, key = lambda x:x[1], reverse = True)
 
-        # Adds the name of similar movies based on the index
+        # The following code adds the name of similar movies based on the index
         i = 1
 
         id_list_from_index = []
@@ -107,6 +107,7 @@ def recommend():
                 id_list_from_index.append(movies_id)
                 similar_movies_found_from_index.append(data_of_movies[data_of_movies.index==index]['title'].values[0])
                 
+                # Used tmdb api to get the posters of the movies using movie id
                 response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key={}'.format(movies_id,tmdb.api_key))
                 data_json = response.json()
                 similar_movies_posters.append('https://image.tmdb.org/t/p/original{}'.format(data_json['poster_path']))
@@ -115,10 +116,13 @@ def recommend():
     
     # Else the data will be scrapped from the original website
     else:
+        # If the user enters correct movie name
         if(len(tmdb_movie_name.search(movie_name)) != 0):
             movie_id = tmdb_movie_name.search(movie_name)[0].id
 
+        # Else it will be scrape the google search for getting the closest movie name on the tmdb website
         else:
+            # Following code is for scraping the movie id from tmdb
             soup = bs4.BeautifulSoup(requests.get('https://google.com/search?q=' + movie_name + ' tmdb').text, "html.parser")
             linka = []
             for link in soup.find_all('a'):
@@ -135,6 +139,7 @@ def recommend():
         similar_movies_found_from_index = []
         similar_movies_posters = []
         
+        # Used tmdb api to get the posters and the name of the movies
         response = requests.get('https://api.themoviedb.org/3/movie/{}?api_key={}'.format(movie_id,tmdb.api_key))
         data_json = response.json()
         similar_movies_posters.append('https://image.tmdb.org/t/p/original{}'.format(data_json['poster_path']))
@@ -145,5 +150,6 @@ def recommend():
     
     return render_template('recommend.html', cards = movie_cards, movie_name = movie_name)
     
+# The following code runs the web app on the 'PORT: 8000'
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
