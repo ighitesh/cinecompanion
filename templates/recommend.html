@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+{% block content %}
+
+<div class="movie" style="color: #ffffff">
+  <center><h3>Movies that are similar to {{movie_name}}</h3></center>
+</div>
+</br>
+<center>
+  <div class="movie-content">
+    <div class="row">
+      {% for poster, title in cards.items() if not cards.hidden %}
+        <div class="col-sm-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{{poster}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{title}}</h5>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div> 
+</center>
+ 
+{% endblock %}
