@@ -32,3 +32,6 @@ The movie details such as title, genre, runtime, rating, poster, etc., are obtai
 1. Used the `TfidfVectorizer` from the `sklearn.feature_extraction.text` library for making the textual data of movies to the vectorized form, which then used for calculating the similarity score.
 2. The similarity score are used for deciding which movies are similar to each other. And for calculating the similarity score, I used `cosine_similarity` from `sklearn.metrics.pairwise` library.
 3. Cosine similarity serves as a metric for gauging document similarity, regardless of their respective sizes. In mathematical terms, it quantifies the cosine of the angle formed between two vectors projected in a multi-dimensional space. This metric offers an advantage by considering the orientation of documents rather than solely focusing on their Euclidean distance. Consequently, even if two similar documents are widely separated due to their sizes, there remains a possibility that they are closely aligned. The cosine similarity increases as the angle between the vectors decreases.
+
+## Working of the code
+The code in the app.py file contains explanatory comments to help you understand how it works. You can freely scroll through the file to gain a better understanding of the code.
