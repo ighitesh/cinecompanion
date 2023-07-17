@@ -35,7 +35,7 @@ from tmdbv3api import TMDb
 from tmdbv3api import Movie
 tmdb = TMDb()
 tmdb_movie_name = Movie()
-tmdb.api_key = '57c527a6203d8f3f0e1a8682904e16eb'
+tmdb.api_key = 'ENTER_YOUR_GENERATED_API_KEY'
 # ########################################################################
 
 # Adding the movies data from csv file to the pandas dataframe
